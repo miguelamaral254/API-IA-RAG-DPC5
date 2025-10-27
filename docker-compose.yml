@@ -1,0 +1,110 @@
+# A linha 'version' foi removida, pois é obsoleta.
+
+services:
+  # ----------------------------------------------------
+  # 1. BANCO DE DADOS (PostgreSQL + pgvector)
+  # ----------------------------------------------------
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: delegacia_db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: delegacia_db
+    ports:
+      - "5433:5432"  
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - delegacia_net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d delegacia_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # ----------------------------------------------------
+  # 2. SERVIÇO OLLAMA (O LLM)
+  # ----------------------------------------------------
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "11434:11434" 
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - delegacia_net
+    restart: unless-stopped
+
+  # ----------------------------------------------------
+  # 3. SERVIÇO DE IA (RAG / FastAPI)
+  # (Comentado, mas ATUALIZADO para usar o serviço 'ollama')
+  # ----------------------------------------------------
+  # ia_api:
+  #   container_name: ia_api
+  #   build:
+  #     context: ./ia_api
+  #   ports:
+  #     - "8001:8001"
+  #   env_file:
+  #     - ./ia_api/.env
+  #   environment:
+  #     # SOBRESCREVE as variáveis para funcionar DENTRO do Docker
+  #     DATABASE_HOST: db                  # Conecta ao serviço 'db'
+  #     DATABASE_PORT: 5432                # Usa a porta interna
+  #     OLLAMA_BASE_URL: http://ollama:11434 # <== ATUALIZADO: Conecta ao serviço 'ollama'
+  #     # (As credenciais do DB virão do env_file)
+  #   networks:
+  #     - delegacia_net
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
+  #     ollama: # <== ATUALIZADO: Agora depende do ollama
+  #       condition: service_started
+
+  # ----------------------------------------------------
+  # 4. API DE BO (CRUD / Node.js)
+  # (Comentado)
+  # ----------------------------------------------------
+  # bo_api:
+  #   container_name: bo_api
+  #   build:
+  #     context: ./bo_api
+  #   ports:
+  #     - "8002:8002"
+  #   environment:
+  #     DATABASE_URL: "postgresql://user:password@db:5432/delegacia_db"
+  #   networks:
+  #     - delegacia_net
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
+
+  # ----------------------------------------------------
+  # 5. ORQUESTRADOR DE CHAT (WebSocket / Node.js)
+  # (Comentado)
+  # ----------------------------------------------------
+  # chat_orchestrator:
+  #   container_name: chat_orchestrator
+  #   build:
+  #     context: ./chat_orchestrator
+  #   ports:
+  #     - "8000:8000"
+  #   networks:
+  #     - delegacia_net
+  #   depends_on:
+  #     - ia_api
+  #     - bo_api
+
+# ----------------------------------------------------
+# DEFINIÇÕES GLOBAIS
+# ----------------------------------------------------
+networks:
+  delegacia_net:
+    driver: bridge
+
+volumes:
+  postgres_data: 
+  ollama_data:   
