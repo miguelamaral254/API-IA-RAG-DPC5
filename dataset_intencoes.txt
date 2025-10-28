@@ -1,0 +1,85 @@
+# --- Dataset de Exemplos para Classificação de Intenção ---
+
+# INTENÇÃO: registrar_bo
+# (Frases que devem levar o bot a oferecer o registro de BO)
+quero registrar um bo
+fui roubado
+preciso dar queixa de um furto
+como faço um boletim de ocorrência online?
+meu celular foi levado
+bateram no meu carro e fugiram
+sofri um assalto agora
+registrar perda de documento
+minha bicicleta foi furtada
+
+# INTENÇÃO: consultar_status_bo
+# (Frases que devem levar o bot a pedir um protocolo para consulta)
+quero saber o andamento do meu bo
+consultar protocolo
+qual o status da minha queixa?
+ver meu bo
+procure esse protocolo 12345-2025
+meu boletim já foi finalizado?
+como está minha ocorrência?
+
+# INTENÇÃO: localizar_unidade
+# (Frases que devem ser respondidas pelo RAG com endereços)
+onde fica a delegacia de boa viagem?
+qual a delegacia mais próxima?
+telefone da delegacia da mulher
+endereço da delegacia de crimes cibernéticos
+preciso ir na delegacia do espinheiro
+onde fica o DHPP?
+
+# INTENÇÃO: dicas_seguranca
+# (Frases que devem ser respondidas pelo RAG com dicas)
+como evitar golpe do pix?
+dicas de segurança online
+o que fazer se for assaltado?
+é seguro andar na rua x?
+como me proteger de fraude?
+dicas contra furto de celular
+
+# INTENÇÃO: denuncia_online
+# (Frases para o fluxo de denúncia)
+quero fazer uma denúncia anônima
+denunciar tráfico de drogas
+como denunciar um crime online?
+disque denúncia
+quero denunciar um vizinho
+vi uma atividade suspeita
+
+# INTENÇÃO: agendamento
+# (Frases para o fluxo de agendamento de serviços)
+preciso marcar um horário
+como agendar para tirar RG?
+agendar atendimento na delegacia
+quero marcar de ir aí
+preciso de um agendamento
+
+# INTENÇÃO: saudacao
+# (Frases de início de conversa)
+oi
+bom dia
+olá
+e aí
+opa
+boa tarde
+boa noite
+
+# INTENÇÃO: despedida
+# (Frases de fim de conversa)
+tchau
+obrigado
+valeu
+até mais
+era só isso
+muito obrigado
+
+# INTENÇÃO: fallback
+# (Frases fora do escopo que o bot não deve entender)
+qual a previsão do tempo?
+me conta uma piada
+quanto é 2+2?
+pizza
+futebol

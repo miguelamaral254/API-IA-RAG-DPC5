@@ -21,6 +21,9 @@ class Settings(BaseSettings):
     
     # Groq
     GROQ_API_KEY: str
+    GROQ_MODEL:str
+    # Personalidade do agente
+    AGENT_PERSONALITY: str
 
     def get_db_connection_string(self) -> str:
         """Retorna a string de conexão do DB."""
