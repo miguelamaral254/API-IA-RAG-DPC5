@@ -10,3 +10,4 @@ pydantic
 pydantic-settings
 pypdf
 docx2txt
+langchain-groq

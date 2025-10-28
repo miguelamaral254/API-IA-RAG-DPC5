@@ -1,4 +1,5 @@
-from langchain_ollama.chat_models import ChatOllama
+# --- Imports Atualizados ---
+from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnableParallel, RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
@@ -7,15 +8,16 @@ from app.config import settings
 
 def get_llm():
     """Inicializa e retorna o LLM."""
-    return ChatOllama(
-        model=settings.LLM_MODEL_NAME,
-        base_url=settings.OLLAMA_BASE_URL
-    )
+    return ChatGroq(
+        groq_api_key=settings.GROQ_API_KEY,
+        model_name=settings.MODEL_NAME
+        )
 
 def get_rag_chain():
     """Cria e retorna a chain de RAG."""
     retriever = get_retriever()
     llm = get_llm()
+    
     
     rag_template = """
     Você é um assistente da Polícia Civil de Pernambuco. 

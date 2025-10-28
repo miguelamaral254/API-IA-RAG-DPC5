@@ -18,6 +18,9 @@ class Settings(BaseSettings):
     # Ollama
     OLLAMA_BASE_URL: str
     LLM_MODEL_NAME: str
+    
+    # Groq
+    GROQ_API_KEY: str
 
     def get_db_connection_string(self) -> str:
         """Retorna a string de conexão do DB."""
