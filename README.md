@@ -132,47 +132,47 @@ O diagrama abaixo ilustra o fluxo de dados desde o usuário (front-end) até os 
 ````mermaid
 graph TD
     subgraph "Usuário"
-        F[🌐 Frontend (React)]
+        F["🌐 Frontend (React)"]
     end
 
     subgraph "Servidor de Chat (Orquestrador)"
-        WS[🚀 Orquestrador (Node.js + WebSocket)]
+        WS["🚀 Orquestrador (Node.js + WebSocket)"]
     end
 
     subgraph "Microsserviços de Backend"
-        NLP(🧠 API de IA - RAG <br/> Python/FastAPI <br/> <b>[Este Repositório]</b>)
-        BO_API(📋 API de Ações - BO <br/> Node.js/Express)
+        NLP["🧠 API de IA - RAG <br/> Python/FastAPI <br/> <b>[Este Repositório]</b>"]
+        BO_API["📋 API de Ações - BO <br/> Node.js/Express"]
     end
 
     subgraph "Bancos de Dados (Docker)"
-        DB[(🐘 PostgreSQL)]
-        PGVEC(Vector<br/>pgvector)
+        DB["🐘 PostgreSQL"]
+        PGVEC["Vector<br/>pgvector"]
     end
 
     subgraph "Serviços Externos"
-        GROQ[⚡️ Groq API (LLM Rápido)]
-        OLLAMA[🤖 Ollama (Embeddings)]
+        GROQ["⚡️ Groq API (LLM Rápido)"]
+        OLLAMA["🤖 Ollama (Embeddings)"]
     end
 
     %% -- Fluxo de Chat (RAG) --
-    F <-->|1. Envia Msg (Socket)| WS
-    WS -->|2. Classifica Intenção| NLP
-    NLP -->|3. Chama LLM (Geração)| GROQ
-    GROQ -->|4. Retorna Intenção| NLP
-    NLP -->|5. Retorna Intenção| WS
-    WS -->|6. Pede Resposta (RAG)| NLP
-    NLP -->|7. Vetoriza Pergunta| OLLAMA
-    NLP -->|8. Busca no Vetor| PGVEC
-    PGVEC -->|9. Retorna Contexto| NLP
-    NLP -->|10. Gera Resposta (LLM)| GROQ
-    GROQ -->|11. Retorna Resposta| NLP
-    NLP -->|12. Retorna Resposta| WS
-    WS -->|13. Envia Resposta (Socket)| F
+    F <-->|"1. Envia Msg (Socket)"| WS
+    WS -->|"2. Classifica Intaenção"| NLP
+    NLP -->|"3. Chama LLM (Geração)"| GROQ
+    GROQ -->|"4. Retorna Intenção"| NLP
+    NLP -->|"5. Retorna Intenção"| WS
+    WS -->|"6. Pede Resposta (RAG)"| NLP
+    NLP -->|"7. Vetoriza Pergunta"| OLLAMA
+    NLP -->|"8. Busca no Vetor"| PGVEC
+    PGVEC -->|"9. Retorna Contexto"| NLP
+    NLP -->|"10. Gera Resposta (LLM)"| GROQ
+    GROQ -->|"11. Retorna Resposta"| NLP
+    NLP -->|"12. Retorna Resposta"| WS
+    WS -->|"13. Envia Resposta (Socket)"| F
 
     %% -- Fluxo de Ação (BO) --
-    F <-- B_MODAL(Abre Modal de BO) --- WS
-    F -->|1. Envia Dados (Form)| BO_API
-    BO_API -->|2. Salva no Banco| DB
+    WS -->|"Comando: Abrir Modal"| F
+    F -->|"Envia Dados (Form via REST/POST)"| BO_API
+    BO_API -->|"Salva no Banco"| DB
 ````
 
 ### Stack Tecnológica (Este Serviço: API-IA-RAG)
